@@ -1,24 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A C 135</title>
     <style>
-        .recorte{
-            width: 1000px;
-            height: 1000px;
-            border-radius: 500px;
-            border:  5px;
-          
-            overflow: hidden;
-        }
-        .recorte{
-            width: 300px;
-            height: auto;
-            object-fit: contain;
-            object-position: top left;
-        }
     
         body{
             background-color: rgb(252, 252, 246 );
@@ -33,15 +19,35 @@
                 font-family: cursive;
             }
     </style>
-    <div class="recorte"> <img src="html/WhatsApp Image 2025-04-19 at 01.33.47.jpeg" alt="imagem">
+   
     </div>
 </head>
 <body>
     <center><h1>Loja simbolica Alvarecer do Campeste</h1></center>
-    <center>
         <center><p>A R L S Alvorecer do campeste nº 135 </p></center>
        <center> <p>Fundadda em 08-02-2023</p></center>
     </center>
     <center><img src="html/WhatsApp Image 2025-04-19 at 01.33.47.jpeg" width="" alt=""></center> 
+    <BUtton onclick="senha()"> Digite seua senha</BUtton>
+    <script>
+        function senha(){
+       let senha = "10145"
+       let tentativas = 1
+        let acertou = false
+        while(tentativas <= 3 && acertou === false){
+            let senhatentativa = prompt("Digite sua senha: ")
+            if(senha === senhatentativa){
+                alert("Senha correta, usuário logado!")
+                acertou = true
+            } else{
+             let tentativassobrando = 3 - tentativas
+                alert("Senha incorreta! Você tem mais: " + tentativassobrando + " Tentativas" )
+         }
+             tentativas++
+    }
+    if(acertou === false) alert("Conta bloqueada!")
+    else alert("Você está dentro do sistema!")
+        }
+    </script>
 </body>
 </html>
