@@ -9,4 +9,4 @@ for (contador = 1; contador <= 50 && soma + contador <= 30; contador++){
       //alert("chegou no 30 parou")
 
       alert("contador:" + contador+ " Ate 30 : " +soma)
-}
+}  
