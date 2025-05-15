@@ -1,7 +1,13 @@
 //Verifique se um número digitado é positivo e par.
-let soma= 0
-for(let cont=1; cont <=10 ; cont++){
-    soma = cont + soma
-    if( soma )
-    alert("contador:  " + cont + "  E positivo: " + soma % 2)
-}
+let par = Number( prompt("Digite um numero"))
+
+
+
+if (par % 2 == 0 ){
+    alert ("Esse número e par ")
+
+}else
+    alert("Esse e impar e negativo")
+
+
+
