@@ -1,3 +1,4 @@
+ 
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -7,17 +8,38 @@
     <style>
     
         body{
-            background-color: rgb(252, 252, 246 );
-            color: rgb(16, 77, 219);
+      margin: 0;
+      padding: 0;
+      height: 100vh; /* centraliza o display*/
+      background-image: url('https://as1.ftcdn.net/v2/jpg/08/47/19/06/1000_F_847190608_vmCUotQ8yt6rz0eD3u7jrsKPGudOp3re.jpg'); /* Troque essa URL pela sua imagem */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex; /* flex deixa centralizado o display*/
+      justify-content: center;/* flex deixa centralizado o display*/
+      align-items: center;/* flex deixa centralizado o display*/
+      color: rgb(52, 247, 4);/* cor da letra do display*/
             font-size: 24pt georgia;
-            }h1{
-                color: rgb(8, 8, 122);
-                font-family: cursive; 
-            }
-            p{
-                color: rgb(6, 6, 119);
-                font-family: cursive;
-            }
+      /*font-family: Arial, sans-serif;*/
+      text-shadow: 1px 1px 4px rgba(250, 57, 9, 0.8);/* cor de fundo da letra*/
+        }   
+            .container {
+      background-color: rgba(0, 0, 0, 0.5);/* deixa o container trnsparente*/
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #899e4e;
+      /*border: none;*/
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      
+    }
              /* Estilo geral do botão */
           body {
             background-color: #002fff; /* Cor de fundo */
@@ -138,7 +160,13 @@
     -->
         <button onclick="mestre()">
     <img src="c:\Users\washington tempone\Desktop\fotos da programa da loja alvorecer do campeste\ALEGORIA DO MESTRE 1.jpg" 
-        width="100" height="100" style="border-radius: 100px; box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);" /></button>
+        style="padding: 10px 20px;
+      background-color: #899e4e;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;"  /></button>
     
         
    
