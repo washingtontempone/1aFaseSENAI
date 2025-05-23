@@ -1,0 +1,50 @@
+#login{
+    display: flex; 
+    flex-direction: column; /*fluxos de elemenstos na tela*/
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px; /* espacamentos entre dos elementos */
+    border: 1px solid #0d158b; /* borda do login ou div criada*/
+    border-radius: 10px; /* borda redonda */
+    padding: 10px; /* espaçameto dentro do elemento */
+    margin: 10px; /* espaçameto fora do elemento */
+    width: 300px ;/* largura do elemento*/
+    min-height: 400px; /* altura do elemento min- altura minima*/
+    box-shadow: 1px 1px 10px blue; /* borda de fundo*/
+}
+#cadastro{
+     display: none; 
+    flex-direction: column; /*fluxos de elemenstos na tela*/
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px; /* espacamentos entre dos elementos */
+    border: 1px solid #0d158b; /* borda do login ou div criada*/
+    border-radius: 10px; /* borda redonda */
+    padding: 10px; /* espaçameto dentro do elemento */
+    margin: 10px; /* espaçameto fora do elemento */
+    width: 300px ;/* largura do elemento*/
+    min-height: 400px; /* altura do elemento min- altura minima*/
+    box-shadow: 1px 1px 10px blue; /* borda de fundo*/
+}
+.containerInput{
+    display: flex;
+    flex-direction: column; /*fluxos de elemenstos na tela*/
+    align-items: center; /* centraliza os container*/ 
+
+}
+input{
+    border-radius: 5px;
+    height: 25px;
+}
+button{
+    background-color: rgb(118, 118, 202);
+    height: 30px;
+    border-radius: 15px;
+    padding: 10px; /* aumenta o botão */
+    transition: 0.8s ease-in-out; /* aumenta o botão em segundos */
+}
+button:hover{
+    background-color: rgb(172, 172, 22);
+    scale: 1.1;
+    cursor: pointer;
+}
