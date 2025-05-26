@@ -1,0 +1,39 @@
+#body {
+  background-image: url('c:\Users\washington tempone\Desktop\fotos da programa da loja alvorecer do campeste\4fdf9938-177a-4dd1-b849-57772aae8c80.jpg');
+  background-size: cover; /* Faz a imagem cobrir todo o fundo */
+  background-repeat: no-repeat; /* Evita repetição da imagem */
+  background-position: center; /* Centraliza a imagem */
+}
+#cadastroObreiro{
+  font-display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  border: 5px;
+  border-radius: 10px;
+  padding: auto;
+  margin: 10px;
+  width: 300px;
+  min-height: 400px;
+  box-shadow: 4px 4px 10px blue;
+}
+#cadastro{
+  font-display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  border: 5px;
+  border-radius: 10px;
+  padding: auto;
+  margin: 10px;
+  width: 300px;
+  min-height: 400px;
+  box-shadow: 4px 4px 10px blue;
+}
+.containerInput{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
