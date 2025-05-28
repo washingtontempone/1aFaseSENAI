@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compras</title>
+    <link rel="stylesheet" href="compra.css">
+</head>
+
+<body>
+    <!-- tela princpal -->
+    <div class="container_principal" id="container_principal">
+        <div class="titulo">
+            <h1>Lista de compras de Washington</h1>
+            <button class="botao_cadastro" onclick="ChamarCadastro()">Cadastrar compras</button>
+        </div>
+        <div class="conteudo_lista">
+            <ol id="minhalista">
+
+            </ol>
+        </div>
+    </div>
+
+    <!-- tela cadastro -->
+    <div class="container_cadastro" id="container_cadastro">
+        <div class="titulo">
+            <h1>Cadastro item</h1>
+            <button onclick="voltarPrincipal()">voltar</button>
+        </div>
+        <div class="conteudo_cadastro">
+            <label for="nome">Nome do item</label>
+            <input type="text" name="nome" id="nome">
+            <button onclick="adicionarItem()">Cadastrar</button>
+
+        </div>
+    </div>
+
+    <script src="compras.js"></script>
+
+</body>
+
+</html>

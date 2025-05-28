@@ -1,0 +1,61 @@
+.container_principal {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.titulo {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
+}
+
+.botao_cadastro {
+    background-color: #7fffd4;
+    border: none;
+    border-radius: 10px;
+    max-height: 50px;
+    /*altera altura do botao*/
+    cursor: pointer;
+}
+
+.conteudo_lista {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+
+}
+
+ol {
+    display: flex;
+    flex-direction: column;
+}
+
+li {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.editar {
+    cursor: pointer;
+}
+
+.deletar {
+    cursor: pointer;
+}
+
+.conteudo_cadastro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: #1608df;
+
+}
+
+.container_cadastro {
+    display: none;
+    flex-direction: column;
+}
