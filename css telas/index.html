@@ -11,42 +11,54 @@
     <nav>
         <button onclick="mostrarCadastro()">cadastro</button>
         <button onclick="mostrarLogin()"> login </button>
-
+        <button onclick="mostrarProdutos()">Produtos</button>
     </nav>
     <h1>Tela supimpa</h1>
-    <div id="login">
+    <section id="login">
         <h2>Login</h2>
         <div class="containerInput">
             <label for="">Nome</label>
-             <input type="text">  
+             <input type="text" id="inpLogNome">  
         </div>
         <div class="containerInput">
             <label for="">Senha</label>
-        <input type="password"> <!--password não aparece o que esta sendo (senha) digitado -->
+            <input type="password" id="inpLogSenha"> <!--password não aparece o que esta sendo (senha) digitado -->
         </div>
         
-        <button>Logar</button>
+        <button onclick="logar()">Logar</button>
 
-    </div>
+    </section>
         
-    <div id="cadastro">
+    <section id="cadastro">
         <h2>cadastro</h2>
         
-            <div class="containerInput">
+        <div class="containerInput">
                 <label for="">Nome</label>
-                <input type="text">
-            </div>
-            <div class="containerInput">
-                <label for="">Endereço</label>
-                <input type="text">
+                <input type="text" id="inpCadNome">
             </div>
             <div class="containerInput">
                 <label for="">E-mail</label>
-                <input type="text">
+                <input type="text" id="inCadEmail">
             </div>
-           <button>cadastro completo</button>
+            <div class="containerInput">
+                <label for="">Senha</label>
+                <input type="text" id="inCadSenha">
+            </div>
+           <button onclick="cadastrar()">cadastro completo</button>
           
-    </div>
+    </section>
+    <section id="produtos">
+        <h2>Produtos</h2>
+        <div class="containerInput">
+            <label for="">Produto</label>
+            <input type="text" id="inCadProduto">
+        </div>
+        <div class="containerInput">
+            <label for="">Valor</label>
+            <input type="number" id="inCadValor">
+        </div>
+
+    </section>
     <script src="script.js"></script>
 </body>
 </html>

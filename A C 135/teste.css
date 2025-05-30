@@ -1,0 +1,58 @@
+/* #veneravel{
+     background-image: url("https://imageswscdn.wslojas.com.br/files/2780/joia-de-veneravel-mestre-594821.jpg");
+}
+.imagem-css{
+    background-image: url('https://imageswscdn.wslojas.com.br/files/2780/joia-de-veneravel-mestre-594821.jpg');
+    
+} */
+.containerPrincipal{
+    background-color: aqua;
+    color: blue;
+    margin: 10px;
+    flex-direction: column;
+    gap: 20px;
+}
+.botao_cadastro{
+    background-color: rgb(145, 221, 221);
+    color: blue;
+    margin: 10px;
+    flex-direction: column;
+    gap: 20px;
+    cursor: cell;
+    padding: 10px;
+    max-height: 50px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px rgb(2, 19, 255);
+    border: none;
+
+}
+.ContainerObreiro{
+    background-color: rgb(176, 243, 146);
+    margin: 20px;
+    padding: 10px; 
+    flex-direction: row;   
+}
+.v{
+    background-color: rgb(176, 243, 146);
+    color: blue;
+    cursor:cell ;
+    border: none;
+    padding: 20px;
+
+}
+.pv{
+    background-color: rgb(176, 243, 146);
+    color: blue;
+    cursor:cell ; 
+    border: none;
+    
+}
+button :hover{
+     
+}
+body{
+    background-image: url("https://imageswscdn.wslojas.com.br/files/2780/joia-de-veneravel-mestre-594821.jpg");
+    background-size: cover;
+}
+
+ 
