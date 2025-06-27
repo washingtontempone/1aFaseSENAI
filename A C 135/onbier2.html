@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Venda de Chopp - On Bier</title>
+  <style>
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f0e6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      color: #3a2e0f;
+    }
+
+    main {
+      background: #fff8e2;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      width: 90%;
+      max-width: 1000px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .tamanhos {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .botao-tamanho {
+      background-color: #d6c174;
+      padding: 20px 30px;
+      font-size: 1.5rem;
+      border-radius: 15px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      user-select: none;
+    }
+
+    .selecionado {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+
+    .barra-container {
+      width: 100%;
+      height: 40px;
+      background: #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .barra-progresso {
+      height: 100%;
+      width: 0%;
+      background: #d6c174;
+      text-align: center;
+      color: #3a2e0f;
+      font-weight: bold;
+      line-height: 40px;
+      transition: width 0.3s ease;
+    }
+
+    .btn-conectar {
+      background: #3a2e0f;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>On Bier</h1>
+  <p>Toque para servir o melhor chopp artesanal</p>
+</header>
+
+<main>
+  <!-- Botão para conectar ao Arduino -->
+  <button class="btn-conectar">Conectar Arduino</button>
+
+  <!-- Exibe o tamanho escolhido -->
+  <div class="selecionado">Nenhum tamanho selecionado</div>
+
+  <!-- Barra de enchimento -->
+  <div class="barra-container">
+    <div class="barra-progresso">0%</div>
+  </div>
+
+  <!-- Botões dos tamanhos -->
+  <div class="tamanhos">
+    <!-- data-porta = número da válvula/saída no Arduino Mega -->
+    <div class="botao-tamanho" data-tamanho="300" data-porta="22">300 ml</div>
+    <div class="botao-tamanho" data-tamanho="500" data-porta="23">500 ml</div>
+    <div class="botao-tamanho" data-tamanho="1000" data-porta="24">1 litro</div>
+    <div class="botao-tamanho" data-tamanho="1500" data-porta="25">1,5 litro</div>
+  </div>
+</main>
+
+<script>
+  // Elementos da interface
+  const btnConectar = document.querySelector('.btn-conectar');
+  const botoes = document.querySelectorAll('.botao-tamanho');
+  const barra = document.querySelector('.barra-progresso');
+  const selecionado = document.querySelector('.selecionado');
+
+  // Variáveis de conexão serial
+  let portaSerial;
+  let writer;
+
+  // Conectar ao Arduino usando Web Serial API
+  async function conectarArduino() {
+    try {
+      portaSerial = await navigator.serial.requestPort(); // Solicita acesso à porta serial
+      await portaSerial.open({ baudRate: 9600 }); // Abre com baud 9600
+      writer = portaSerial.writable.getWriter(); // Pega o writer para enviar dados
+      alert("Arduino conectado com sucesso!");
+    } catch (e) {
+      alert("Erro ao conectar no Arduino: " + e);
+    }
+  }
+
+  // Envia comando pela serial
+  async function enviarComando(comando) {
+    if (!writer) return;
+    const encoder = new TextEncoder();
+    await writer.write(encoder.encode(comando + "\n")); // Envia comando com quebra de linha
+  }
+
+  // Quando clicar no botão de conectar
+  btnConectar.addEventListener('click', conectarArduino);
+
+  // Quando clicar em um botão de tamanho
+  botoes.forEach(botao => {
+    botao.addEventListener('click', async () => {
+      const mlTotal = parseInt(botao.dataset.tamanho); // Total em ml
+      const porta = botao.dataset.porta; // Número da porta Arduino (22, 23, etc.)
+      let mlAtual = 0;
+
+      // Atualiza texto da interface
+      selecionado.textContent = `Tamanho selecionado: ${mlTotal} ml`;
+      barra.style.width = "0%";
+      barra.textContent = "0%";
+
+      // Envia comando para abrir válvula
+      await enviarComando("ABRIR" + porta);
+
+      // Simula o enchimento em passos de 50 ml
+      const intervalo = setInterval(async () => {
+        mlAtual += 50;
+        let porcentagem = Math.min((mlAtual / mlTotal) * 100, 100);
+        barra.style.width = porcentagem + "%";
+        barra.textContent = Math.floor(porcentagem) + "%";
+
+        if (mlAtual >= mlTotal) {
+          clearInterval(intervalo);
+          await enviarComando("FECHAR" + porta); // Envia comando para fechar
+        }
+      }, 500); // 500ms entre cada 50ml
+    });
+  });
+</script>
+
+</body>
+</html>

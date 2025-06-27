@@ -1,40 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="teste.css">
     <title>teste ac135</title>
-    <style>
-        body{
-            background-image: url('c:\Users\washington tempone\Desktop\fotos da programa da loja alvorecer do campeste\a8c24997-109b-403b-bc86-4b6284ccd992.jpg');
-        }
-    </style>
+   
 </head>
+
 <body>
     <h1>A∴ R∴ L∴ S∴ </h1>
     <h1>Alvorecer do Campesde 135 </h1>
     <div class="containerPrincipal">
         <div id="cadastroObreiro">
-            <button class="botao_cadastro" onclick="cadastroObreiro()">Cadastro de obreiro</button>
-            <div class="ContainerObreiro">
-            <button class="v" onclick="veneravel()">Venerável</button>
-            <button class="pv" onclick="primeiroVigilante()">Primeiro Vigilante</button>
-            <button class="sv" onclick="segundoVigilante()">Segundo Vigilante</button>
-            <button onclick="orador()">Orador</button>
-            <button onclick="secretario()">Secretário</button>
-            <button onclick="mestreHarmonia()">Mestre Harmônia</button>
-            <button onclick="hospitaleiro()">Hospitaleiro</button>
-            <button onclick="banquete()">Mestre de Bamquete</button>
-            <button onclick="companheiro()">Companheiro</button>
-            <button onclick="bandeira()">Porta Bandeira</button>
-            <button onclick="estandarte()">Porta Estandarte</button>
-            <button onclick="espada()">Porta Espada</button>
-            <button onclick="guarda()">Guarda do templo</button>
-            <button onclick="cobridor()">Cobridor externo</button>
-            </div>
+            <nav>
+                <button id="v" onclick="veneravel()">Venerável</button>
+                <button id="pv" onclick="primeiroVigilante()">Primeiro Vigilante</button>
+                <button id="sv" onclick="segundoVigilante()">Segundo Vigilante</button>
+                <button id="or" onclick="orador()">Orador</button>
+                <button id="se" onclick="secretario()">Secretário</button>
+                <button id="mh" onclick="mestreHarmonia()">Mestre Harmônia</button>
+                <button id="ho" onclick="hospitaleiro()">Hospitaleiro</button>
+                <button id="mb" onclick="banquete()">Mestre de Bamquete</button>
+                <button id="co" onclick="companheiro()">Companheiro</button>
+                <button id="pb" onclick="bandeira()">Porta Bandeira</button>
+                <button id="es" onclick="estandarte()">Porta Estandarte</button>
+                <button id="pe" onclick="espada()">Porta Espada</button>
+                <button id="gt" onclick="guarda()">Guarda do templo</button>
+                <button id="ce" onclick="cobridor()">Cobridor externo</button>
+                <button id="te" onclick="tesoureiro()">Tesoureiro</button>
+                <button class="botao_cadastro" onclick="cadastroObreiro()">Cadastro de obreiro</button>
+            </nav>
+            <!-- <section id="ContainerObreiro">
+            </section> -->
         </div>
+    </div>
+    <div id="cadObreiro" class="cadObreiro">
+        
+        <ul>
+            <li> Nome</li>
+             <input type="text">
+            <li>Id Massonica</li>
+            <input type="number">
+            <li>Endereço</li>
+            <input type="text">
+            <li>Contato</li>
+            Celular <input type="number">
+            E-mail <input type="text">
+            <li>Profissão</li>
+            <input type="text">
+        </ul>
     </div>
     <script src="teste.js"></script>
 </body>
+
 </html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Venda de Chopp - On Bier</title>
+  <style>
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: #f3f0e7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding: 20px;
+      user-select: none; /* impede seleção de texto em touch */
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      color: #3a2e0f;
+      font-weight: 900;
+      letter-spacing: 3px;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      color: #7a6b30;
+      font-style: italic;
+      margin-top: 5px;
+    }
+
+    /* Container principal */
+    main {
+      background: #fff9e6;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(58,46,15,0.2);
+      width: 80vw;
+      max-width: 1000px;
+      padding: 30px;
+      display: flex;
+      flex-direction: row;
+      gap: 40px;
+    }
+
+    /* Lado esquerdo: imagem + tamanhos */
+    .esquerda {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .marca-img {
+      width: 300px;
+      height: 400px;
+      background: url('https://cdn-icons-png.flaticon.com/512/945/945067.png') no-repeat center/contain;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(58,46,15,0.3);
+      margin-bottom: 30px;
+    }
+
+    .tamanhos {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .botao-tamanho {
+      background-color: #d6c174;
+      border-radius: 15px;
+      padding: 25px 40px;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #3a2e0f;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(58,46,15,0.3);
+      transition: background-color 0.3s ease;
+      user-select: none;
+      min-width: 140px;
+      text-align: center;
+    }
+
+    .botao-tamanho:hover {
+      background-color: #b2a15b;
+    }
+
+    /* Lado direito: modo de pagamento */
+    .direita {
+      flex: 1;
+      background-color: #fef8e2;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: inset 0 0 15px rgba(58,46,15,0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pagamento-titulo {
+      font-size: 2.2rem;
+      color: #3a2e0f;
+      margin-bottom: 20px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    /* Área do QR Code */
+    .qr-code {
+      width: 250px;
+      height: 250px;
+      background: #fff;
+      border: 5px solid #3a2e0f;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 25px;
+      box-shadow: 0 0 15px rgba(58,46,15,0.5);
+    }
+
+    .qr-code img {
+      width: 80%;
+      height: 80%;
+      object-fit: contain;
+    }
+
+    /* Botão cartão */
+    .btn-cartao {
+      background-color: #d6c174;
+      border: none;
+      border-radius: 15px;
+      padding: 20px 40px;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #3a2e0f;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(58,46,15,0.3);
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+
+    .btn-cartao:hover {
+      background-color: #b2a15b;
+    }
+
+    /* Texto que mostra tamanho escolhido */
+    .selecionado {
+      margin-bottom: 20px;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #3a2e0f;
+      min-height: 50px;
+      text-align: center;
+    }
+
+    /* Mobile simplificado */
+    @media (max-width: 800px) {
+      main {
+        flex-direction: column;
+        width: 95vw;
+      }
+      .marca-img {
+        width: 250px;
+        height: 330px;
+      }
+      .botao-tamanho {
+        min-width: 120px;
+        padding: 20px 30px;
+        font-size: 1.7rem;
+      }
+      .qr-code {
+        width: 200px;
+        height: 200px;
+      }
+      .btn-cartao {
+        padding: 15px 30px;
+        font-size: 1.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>On Bier</h1>
+  <p>A melhor experiência em chopp artesanal</p>
+</header>
+
+<main>
+  <section class="esquerda">
+    <!-- Imagem do chopp - você pode trocar o link da imagem -->
+    <div class="marca-img" title="Caneca de Chopp"></div>
+
+    <!-- Botões dos tamanhos -->
+    <div class="tamanhos">
+      <div class="botao-tamanho" data-tamanho="300 ml">300 ml</div>
+      <div class="botao-tamanho" data-tamanho="500 ml">500 ml</div>
+      <div class="botao-tamanho" data-tamanho="1 litro">1 litro</div>
+      <div class="botao-tamanho" data-tamanho="1,5 litro">1,5 litro</div>
+    </div>
+  </section>
+
+  <section class="direita">
+    <div class="selecionado">Escolha um tamanho acima</div>
+
+    <div class="pagamento-titulo">Forma de pagamento</div>
+
+    <!-- Área do QR code -->
+    <div class="qr-code" style="display:none;">
+      <!-- Você pode colocar aqui um QR Code real -->
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/QRCode_icon.svg/1024px-QRCode_icon.svg.png" alt="QR Code Pagamento" />
+    </div>
+
+    <!-- Botão cartão -->
+    <button class="btn-cartao" style="display:none;">Pagar com Cartão</button>
+  </section>
+</main>
+
+<script>
+  // Seleciona os botões de tamanho
+  const botoes = document.querySelectorAll('.botao-tamanho');
+  // Seleciona a área onde mostra o tamanho escolhido
+  const selecionado = document.querySelector('.selecionado');
+  // Seleciona área do QR code
+  const qrCode = document.querySelector('.qr-code');
+  // Botão cartão
+  const btnCartao = document.querySelector('.btn-cartao');
+
+  // Função para quando um tamanho é clicado
+  botoes.forEach(botao => {
+    botao.addEventListener('click', () => {
+      // Atualiza o texto do tamanho escolhido
+      selecionado.textContent = `Tamanho selecionado: ${botao.dataset.tamanho}`;
+
+      // Exibe opções de pagamento
+      qrCode.style.display = 'flex';
+      btnCartao.style.display = 'inline-block';
+    });
+  });
+
+  // Evento ao clicar no botão de cartão
+  btnCartao.addEventListener('click', () => {
+    alert('Pagamento via cartão selecionado. Próximos passos aqui!');
+  });
+</script>
+
+</body>
+</html>

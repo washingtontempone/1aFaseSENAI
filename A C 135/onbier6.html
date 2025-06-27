@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Venda de Chopp - On Bier</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+    body {
+      background: #f4f0e6;
+      display: flex; flex-direction: column; align-items: center; padding: 20px;
+    }
+    header { text-align: center; margin-bottom: 20px; }
+    header h1 { font-size: 3rem; color: #3a2e0f; }
+    header p { color: #7a6b30; margin-top: 5px; }
+    main {
+      background: #fff8e2; padding: 30px; border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      width: 95%; max-width: 1000px;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .btn-conectar {
+      background: #3a2e0f; color: white; padding: 10px 20px;
+      border-radius: 10px; font-size: 1rem; margin-bottom: 20px; cursor: pointer;
+    }
+    .selecionado { font-size: 1.5rem; margin-bottom: 15px; }
+    .barra-container {
+      width: 100%; height: 40px; background: #ddd;
+      border-radius: 10px; overflow: hidden; margin-bottom: 20px;
+    }
+    .barra-progresso {
+      height: 100%; width: 0%; background: #d6c174;
+      text-align: center; color: #3a2e0f; font-weight: bold; line-height: 40px;
+      transition: width 0.3s ease;
+    }
+    .tamanhos {
+      display: flex; flex-wrap: wrap; gap: 15px;
+      justify-content: center; margin-bottom: 30px;
+    }
+    .botao-tamanho {
+      background-color: #d6c174; padding: 20px 30px;
+      font-size: 1.5rem; border-radius: 15px; cursor: pointer; user-select: none;
+    }
+    .pagamento { margin-top: 10px; text-align: center; }
+    .pagamento h2 { margin-bottom: 10px; font-size: 1.4rem; color: #3a2e0f; }
+    .pagamento-opcoes {
+      display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
+    }
+    .pagamento-opcao {
+      background-color: #fff; border: 2px solid #3a2e0f; border-radius: 10px;
+      padding: 15px; width: 150px; text-align: center; cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: transform 0.2s;
+    }
+    .pagamento-opcao:hover { transform: scale(1.05); }
+    .pagamento-opcao img {
+      width: 60px; height: 60px; margin-bottom: 10px;
+    }
+    .pagamento-opcao span {
+      display: block; font-size: 1rem; color: #3a2e0f; font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>On Bier</h1>
+  <p>Toque para servir o melhor chopp artesanal</p>
+</header>
+
+<main>
+  <button class="btn-conectar">Conectar Arduino</button>
+  <div class="selecionado">Escolha o volume do chopp</div>
+  <div class="barra-container"><div class="barra-progresso">0%</div></div>
+
+  <div class="tamanhos">
+    <div class="botao-tamanho" data-tamanho="300" data-porta="22">300 ml</div>
+    <div class="botao-tamanho" data-tamanho="500" data-porta="23">500 ml</div>
+    <div class="botao-tamanho" data-tamanho="1000" data-porta="24">1 litro</div>
+    <div class="botao-tamanho" data-tamanho="1500" data-porta="25">1,5 litro</div>
+  </div>
+
+  <div class="pagamento">
+    <h2>Forma de pagamento</h2>
+    <div class="pagamento-opcoes">
+      <div class="pagamento-opcao" onclick="pagar('PIX')">
+        <img src="https://logodownload.org/wp-content/uploads/2020/10/pix-bc-logo-1.png" alt="PIX"><span>PIX</span>
+      </div>
+      <div class="pagamento-opcao" onclick="pagar('Crédito')">
+        <img src="https://cdn-icons-png.flaticon.com/512/633/633611.png" alt="Crédito"><span>Crédito</span>
+      </div>
+      <div class="pagamento-opcao" onclick="pagar('Débito')">
+        <img src="https://cdn-icons-png.flaticon.com/512/633/633605.png" alt="Débito"><span>Débito</span>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  const btnConectar = document.querySelector('.btn-conectar');
+  const botoes = document.querySelectorAll('.botao-tamanho');
+  const barra = document.querySelector('.barra-progresso');
+  const selecionado = document.querySelector('.selecionado');
+
+  let portaSerial, writer;
+  let volumeSelecionado = null;
+  let portaSelecionada = null;
+
+  async function conectarArduino() {
+    try {
+      portaSerial = await navigator.serial.requestPort();
+      await portaSerial.open({ baudRate: 9600 });
+      writer = portaSerial.writable.getWriter();
+      alert("Arduino conectado!");
+    } catch (e) {
+      alert("Erro ao conectar: " + e);
+    }
+  }
+
+  async function enviarComando(comando) {
+    if (!writer) return;
+    const encoder = new TextEncoder();
+    await writer.write(encoder.encode(comando + "\n"));
+  }
+
+  botoes.forEach(botao => {
+    botao.addEventListener('click', () => {
+      volumeSelecionado = parseInt(botao.dataset.tamanho);
+      portaSelecionada = botao.dataset.porta;
+      barra.style.width = "0%";
+      barra.textContent = "0%";
+      selecionado.textContent = `Volume selecionado: ${volumeSelecionado} ml. Agora escolha o pagamento.`;
+    });
+  });
+
+  function pagar(tipo) {
+    if (!volumeSelecionado || !portaSelecionada) {
+      alert("Escolha o volume do chopp primeiro.");
+      return;
+    }
+    alert(`Pagamento via ${tipo} confirmado! Servindo ${volumeSelecionado} ml...`);
+    servirChopp(volumeSelecionado, portaSelecionada);
+  }
+
+  async function servirChopp(mlTotal, porta) {
+    let mlAtual = 0;
+    await enviarComando("ABRIR" + porta);
+    const intervalo = setInterval(async () => {
+      mlAtual += 50;
+      let porcentagem = Math.min((mlAtual / mlTotal) * 100, 100);
+      barra.style.width = porcentagem + "%";
+      barra.textContent = Math.floor(porcentagem) + "%";
+      if (mlAtual >= mlTotal) {
+        clearInterval(intervalo);
+        await enviarComando("FECHAR" + porta);
+        selecionado.textContent = `Chopp ${mlTotal} ml servido. Obrigado!`;
+        volumeSelecionado = null;
+        portaSelecionada = null;
+      }
+    }, 500);
+  }
+
+  btnConectar.addEventListener('click', conectarArduino);
+</script>
+
+</body>
+</html>

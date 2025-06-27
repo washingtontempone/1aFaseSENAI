@@ -1,8 +1,8 @@
-function cadastro(){
-document.getElementById('cadastro').style.display= 'flex'
-document.getElementById('cadastroObreiro').style.display='none'
+function cadastro() {
+   document.getElementById('cadastro').style.display = 'flex'
+   document.getElementById('cadastroObreiro').style.display = 'none'
 }
-function cadastroObreiro(){
-   document.getElementById('cadastro').style.display= "flex"
-document.getElementById('cadastroObreiro').style.display= 'none'
+function cadastroObreiro() {
+   document.getElementById('cadastro').style.display = 'none'
+   document.getElementById('cadastroObreiro').style.display = 'flex'
 }

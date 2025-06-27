@@ -1,39 +1,39 @@
 //let nome , email, endereco
-inicializar
+inicializar()
 
-let usuario= {
-    nome: '',
-    email:'',
-    senha:''
-}
+let usuarios = []
+
 function logar(){
     let nome = document.getElementById('inpLogNome').value
     let senha = document.getElementById('inpLogSenha').value
 
-    if(nome === usuario.nome && senha === usuario.senha){
-        alert("login esfetuado com sucesso")
-        mostrarProdutos()
-        limparInputs()
-    }else{
-        alert("errou miseravel")
+    for( i=0; i<usuarios.length; i++){
+        if(nome === usuarios[i].nome || nome=== usuarios[i].email && usuarios[i].senha === senha){
+            alert("login esfetuado com sucesso")
+            mostrarProdutos()
+            limparInputs()
+        }
+        // else{
+        //     alert("errou miseravel")
+        // }
+
     }
+    
     mostrarProdutos()
 }
 
 function cadastrar(){
-    usuario.nome = document.getElementById('inpCadNome').value
-    usuario.senha = document.getElementById('inCadSenha').value
-    usuario.email = document.getElementById('inCadEmail').value
-    //alert("Cadastro com suscesso")
-    console.log(usuario)
-    mostrarLogin()
+    let usuario= {
+        nome: document.getElementById('inpCadNome').value,
+        senha: document.getElementById('inCadSenha').value,
+        email:document.getElementById('inCadEmail').value   
+    }
+    usuarios.push(usuario)
     limparInputs()
-
-    
+    mostrarLogin()   
+    alert("Cadastro com suscesso")
+    console.log(usuario)
 }
-
-
-
 function mostrarLogin() {
     esconderTodas()
     document.getElementById('login').style.display = 'flex' /* flex aprece o botão */
@@ -42,15 +42,14 @@ function mostrarLogin() {
 function mostrarCadastro() {
     esconderTodas()
     document.getElementById('cadastro').style.display = 'flex'
-    document.getElementById('inpCapNome').focus()
+    document.getElementById('inpCadNome').focus()
 }
-
 function mostrarProdutos() {
     esconderTodas()
     document.getElementById('produtos').style.display = 'flex'
-    document.getElementById('inpCapNome').focus()
+    document.getElementById('navBar').style.display = 'flex'
+    document.getElementById('inpCadNome').focus()
 }
-
 function esconderTodas() {
     document.getElementById('login').style.display = 'none'
     document.getElementById('cadastro').style.display = 'none'

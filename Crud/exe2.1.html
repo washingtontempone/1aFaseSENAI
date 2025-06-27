@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Sistema de Biblioteca</title>
+  <!-- <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+    }
+    label, input, button {
+      display: block;
+      margin: 10px 0;
+    }
+    #status {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style> -->
+</head>
+<body>
+
+  <h1>Sistema de Biblioteca</h1>
+
+  <!-- Entrada do Título do Livro -->
+  <label for="titulo">Título do Livro:</label>
+  <input type="text" id="titulo" placeholder="Digite o título do livro">
+
+  <!-- Entrada do Autor -->
+  <label for="autor">Autor:</label>
+  <input type="text" id="autor" placeholder="Digite o nome do autor">
+
+  <!-- Botões -->
+  <button onclick="emprestar()">Emprestar</button>
+  <button onclick="devolver()">Devolver</button>
+
+  <!-- Área de status -->
+  <div id="status">Status: Livro ainda não registrado.</div>
+
+  <script>
+    // Variáveis globais
+    let titulo = "";
+    let autor = "";
+    let emprestado = false;
+
+    function atualizarDados() {
+      titulo = document.getElementById("titulo").value;
+      autor = document.getElementById("autor").value;
+    }
+
+    function emprestar() {
+      atualizarDados();
+
+      if (titulo === "" || autor === "") {
+        document.getElementById("status").innerText = "Preencha o título e o autor!";
+        return;
+      }
+
+      if (emprestado) {
+        document.getElementById("status").innerText = `O livro "${titulo}" já está emprestado.`;
+      } else {
+        emprestado = true;
+        document.getElementById("status").innerText = `Você emprestou o livro "${titulo}" de ${autor}.`;
+      }
+    }
+
+    function devolver() {
+      atualizarDados();
+
+      if (titulo === "" || autor === "") {
+        document.getElementById("status").innerText = "Preencha o título e o autor!";
+        return;
+      }
+
+      if (!emprestado) {
+        document.getElementById("status").innerText = `O livro "${titulo}" já está disponível.`;
+      } else {
+        emprestado = false;
+        document.getElementById("status").innerText = `Você devolveu o livro "${titulo}" de ${autor}.`;
+      }
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Catálogo de Produtos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    input, button {
+      padding: 10px;
+      margin: 5px 0;
+      font-size: 16px;
+    }
+
+    #resultado {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Título da página -->
+  <h1>Catálogo de Produtos</h1>
+
+  <!-- Campo de entrada para digitar o nome do produto -->
+  <input type="text" id="inputProduto" placeholder="Digite o nome do produto">
+
+  <!-- Botão que chama a função ao ser clicado -->
+  <button onclick="buscarProduto()">Buscar</button>
+
+  <!-- Área onde será mostrado o resultado da busca -->
+  <div id="resultado"></div>
+
+  <!-- Script JavaScript -->
+  <script>
+    // Array com os nomes dos produtos (simples)
+    const catalogo = ['camisa', 'calça', 'tenis', 'bermuda'];
+
+    // Função chamada ao clicar no botão
+    function buscarProduto() {
+      // Pegando o valor digitado no input
+      const nomeProduto = document.getElementById('inputProduto').value;
+
+      // Procura no array ignorando letras maiúsculas/minúsculas
+      const produtoEncontrado = catalogo.find(produtoCatalogo => 
+        produtoCatalogo.toLowerCase() === nomeProduto.toLowerCase()
+      );
+
+      // Seleciona o elemento onde o resultado será exibido
+      const resultadoDiv = document.getElementById('resultado');
+
+      // Mostra o resultado na tela
+      if (produtoEncontrado) {
+        resultadoDiv.textContent = "Produto encontrado: " + produtoEncontrado;
+      } else {
+        resultadoDiv.textContent = "Produto não encontrado.";
+      }
+    }
+  </script>
+
+</body>
+</html>

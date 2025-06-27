@@ -65,7 +65,6 @@
     
 
 }
-
 .containerInput {
     display: flex;
     flex-direction: column;
@@ -74,10 +73,12 @@
     /* centraliza os container*/
 
 }
-
 input {
     border-radius: 5px;
     height: 25px;
+}
+#navBar{
+    display: none;
 }
 
 button {
@@ -88,7 +89,7 @@ button {
     /* aumenta o botão */
     transition: 0.8s ease-in-out;
     /* aumenta o botão em segundos */
-    box-shadow: 3px 3px 3px blue;
+    box-shadow: 3px 3px 3px rgb(43, 43, 117);
     border: none;
 }
 
@@ -99,9 +100,19 @@ button:hover {
 }
 
 body {
+    /* display: flex; */
     background-image: linear-gradient(rgb(235, 212, 109), rgb(255, 102, 0));
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
     gap: 30px;
+}.bt-secundario{
+    background-color: rgb(134, 131, 131);
+}
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center ;
+    width: 100vw;
+    min-height: 100vh;
 }
