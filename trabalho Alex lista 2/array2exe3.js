@@ -2,8 +2,9 @@
 
 const nomes = ["Ana", "Carlos", "Beatriz", "Daniel", "Eduarda", "Bruno"];
 
-let maiores = nomes.filter((maior ) =>{
-    return Math,max(maior)
-} )
+let maiores = nomes.reduce((maior, atual ) => {
+return atual.length > maior.length? atual : maior
+})
 console.log(maiores)
 
+//errou tem que corrigir
