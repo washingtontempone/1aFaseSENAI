@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<!-- Declara que este documento é uma página HTML5 -->
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Define a codificação de caracteres da página para UTF-8, permitindo acentuação -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Configura o viewport para dispositivos móveis, para que o layout seja responsivo -->
+  <title>CRUD Simples</title>
+  <!-- Define o título que aparecerá na aba do navegador -->
+
+  <style>
+    /* Início dos estilos CSS da página */
+
+    body {
+      font-family: Arial, sans-serif; 
+      /* Fonte da página Arial, ou outra fonte sem serifa se Arial não estiver disponível */
+      margin: 20px; 
+      /* Espaçamento para afastar o conteúdo das bordas da janela do navegador */
+    }
+
+    input, button {
+      padding: 8px; 
+      /* Espaço interno para que o texto/número dentro do campo e do botão não fique grudado nas bordas */
+      font-size: 1em; 
+      /* Tamanho da fonte para manter legibilidade */
+    }
+
+    input {
+      width: 300px; 
+      /* Largura fixa para o campo de texto, para manter layout organizado */
+      margin-right: 10px; 
+      /* Espaço entre o campo de texto e o botão */
+    }
+
+    ul {
+      list-style-type: none; 
+      /* Remove os marcadores padrão (bolinhas) da lista para um visual mais limpo */
+      padding-left: 0; 
+      /* Remove o recuo padrão que as listas têm */
+    }
+
+    li {
+      margin-bottom: 8px; 
+      /* Espaço entre os itens da lista para evitar que fiquem colados */
+    }
+
+    .btn {
+      margin-left: 5px; 
+      /* Espaço antes do botão para separar do texto do item da lista */
+      cursor: pointer; 
+      /* Muda o cursor para a mãozinha quando o mouse passa sobre o botão, indicando que é clicável */
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Corpo da página, área visível para o usuário -->
+
+  <h1>Lista de Tarefas (CRUD)</h1>
+  <!-- Título principal do site -->
+
+  <!-- Formulário para adicionar nova tarefa -->
+  <form id="formTarefa">
+    <!-- Form usado para agrupar campos e botão; o id serve para localizar via JavaScript -->
+
+    <input type="text" id="novaTarefa" placeholder="Nova tarefa" required />
+    <!-- Campo de texto onde o usuário digita o nome da tarefa
+         'placeholder' mostra um texto sugestivo dentro do campo
+         'required' força o usuário a preencher antes de enviar o formulário -->
+
+    <button type="submit">Adicionar</button>
+    <!-- Botão para enviar o formulário -->
+  </form>
+
+  <ul id="listaTarefas"></ul>
+  <!-- Lista onde as tarefas adicionadas aparecerão -->
+
+  <script>
+    // Início do código JavaScript que torna a página interativa
+
+    // Pega as tarefas já salvas no localStorage (armazenamento local do navegador)
+    // localStorage.getItem('tarefas') retorna uma string JSON
+    // JSON.parse transforma essa string em array JavaScript
+    // Se não existir nada salvo, inicializa um array vazio []
+    let tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
+
+    // Busca o formulário pelo id para poder escutar o evento de envio (submit)
+    const form = document.getElementById('formTarefa');
+
+    // Busca o input onde o usuário digita a nova tarefa
+    const input = document.getElementById('novaTarefa');
+
+    // Busca a lista <ul> onde os itens serão mostrados
+    const lista = document.getElementById('listaTarefas');
+
+    // Função que salva o array 'tarefas' no localStorage para persistir os dados
+    function salvarTarefas() {
+      // localStorage só aceita strings, por isso convertemos o array para JSON string
+      localStorage.setItem('tarefas', JSON.stringify(tarefas));
+      // 'tarefas' é a chave usada para recuperar os dados depois
+    }
+
+    // Função que cria os elementos HTML para mostrar as tarefas na tela
+    function renderizarTarefas() {
+      lista.innerHTML = '';
+      // Limpa todo o conteúdo anterior da lista
+      // Porque vamos recriar tudo do zero para garantir que está atualizada
+
+      // Percorre todas as tarefas no array, o forEach recebe:
+      // - tarefa: texto da tarefa
+      // - index: posição dela no array, importante para editar/deletar
+      tarefas.forEach((tarefa, index) => {
+        // createElement cria um novo elemento HTML do tipo especificado
+        // aqui criamos um <li> que representa um item da lista
+        const li = document.createElement('li');
+
+        // textContent define o conteúdo textual do elemento <li>
+        li.textContent = tarefa;
+
+        // Criamos um botão para editar a tarefa
+        const btnEditar = document.createElement('button');
+        btnEditar.textContent = 'Editar'; // texto do botão
+        btnEditar.className = 'btn'; // aplica a classe CSS 'btn' para estilo
+        btnEditar.onclick = () => editarTarefa(index);
+        // Quando clicado, executa a função editarTarefa passando o índice da tarefa
+
+        // Criamos um botão para excluir a tarefa
+        const btnDeletar = document.createElement('button');
+        btnDeletar.textContent = 'Excluir'; // texto do botão
+        btnDeletar.className = 'btn'; // aplica a classe CSS 'btn' para estilo
+        btnDeletar.onclick = () => deletarTarefa(index);
+        // Quando clicado, executa a função deletarTarefa com o índice
+
+        // Adicionamos o botão editar dentro do <li>
+        // appendChild adiciona um elemento filho dentro do elemento pai
+        li.appendChild(btnEditar);
+
+        // Adicionamos o botão excluir dentro do <li>
+        li.appendChild(btnDeletar);
+
+        // Finalmente adicionamos o <li> completo dentro da lista <ul>
+        lista.appendChild(li);
+      });
+    }
+
+    // Escuta o evento 'submit' do formulário para executar código quando usuário adicionar tarefa
+    form.addEventListener('submit', (e) => {
+      e.preventDefault(); 
+      // preventDefault impede que o navegador faça o comportamento padrão do submit (recarregar a página)
+
+      const texto = input.value.trim(); 
+      // Pega o valor do input e remove espaços no começo e fim para evitar entradas vazias
+
+      if (texto) { 
+      // Se texto não estiver vazio, prossegue
+        tarefas.push(texto);
+        // Adiciona a nova tarefa ao array de tarefas
+
+        salvarTarefas();
+        // Salva a lista atualizada no localStorage para não perder ao atualizar a página
+
+        renderizarTarefas();
+        // Atualiza a lista visível na página com o novo item
+
+        input.value = '';
+        // Limpa o campo para o usuário poder digitar outra tarefa
+      }
+    });
+
+    // Função que abre um prompt para o usuário editar o texto de uma tarefa existente
+    function editarTarefa(index) {
+      // prompt abre uma janela modal com um campo de texto para o usuário digitar
+      // O segundo parâmetro pré-preenche o campo com o texto atual da tarefa
+      const novoTexto = prompt('Edite a tarefa:', tarefas[index]);
+
+      if (novoTexto !== null) { 
+      // Se o usuário não apertou "Cancelar" no prompt (ou seja, digitou algo ou deixou vazio)
+        tarefas[index] = novoTexto.trim();
+        // Atualiza o array com o novo texto, removendo espaços extras
+
+        salvarTarefas();
+        // Salva o array atualizado no localStorage
+
+        renderizarTarefas();
+        // Atualiza a lista visível para refletir a alteração
+      }
+    }
+
+    // Função que deleta uma tarefa da lista após confirmação do usuário
+    function deletarTarefa(index) {
+      if (confirm('Tem certeza que quer excluir esta tarefa?')) {
+      // confirm exibe uma caixa modal de confirmação (OK ou Cancelar)
+
+        tarefas.splice(index, 1);
+        // splice remove 1 item do array na posição index (deleta a tarefa)
+
+        salvarTarefas();
+        // Salva a lista atualizada após exclusão
+
+        renderizarTarefas();
+        // Atualiza a lista visível para refletir a exclusão
+      }
+    }
+
+    // Quando a página carrega, chama a função para mostrar as tarefas já salvas
+    renderizarTarefas();
+
+  </script>
+</body>
+</html>

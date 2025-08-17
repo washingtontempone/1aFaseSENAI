@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Exercícios LocalStorage</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+
+    section {
+      border: 2px solid #ccc;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      background-color: #fff;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    button {
+      padding: 5px 10px;
+      font-size: 1rem;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    input, textarea {
+      padding: 5px;
+      font-size: 1rem;
+      width: 100%;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. Contador Persistente -->
+  <section>
+    <h2>1. Contador Persistente</h2>
+    <h3 id="contador">0</h3>
+    <button onclick="alterarContador(-1)">−</button>
+    <button onclick="alterarContador(1)">+</button>
+  </section>
+
+  <!-- 2. Texto Salvo -->
+  <section>
+    <h2>2. Texto Salvo</h2>
+    <textarea id="meuTexto" rows="4" placeholder="Digite algo..."></textarea>
+  </section>
+
+  <!-- 3. Checkbox Persistente -->
+  <section>
+    <h2>3. Lista de Tarefas</h2>
+    <label><input type="checkbox" id="tarefa1"> Comprar água</label><br>
+    <label><input type="checkbox" id="tarefa2"> Conferir mochila</label><br>
+    <label><input type="checkbox" id="tarefa3"> Passar protetor solar</label>
+  </section>
+
+  <!-- 4. Nome do Usuário -->
+  <section>
+    <h2>4. Nome do Usuário</h2>
+    <p id="boasVindasNome"></p>
+    <input type="text" id="nomeUsuarioInput" placeholder="Digite seu nome">
+    <button onclick="salvarNome()">Salvar Nome</button>
+  </section>
+
+  <!-- 5. Escolha de Cor -->
+  <section>
+    <h2>5. Escolha de Cor</h2>
+    <button onclick="mudarCor('lightblue')">Azul</button>
+    <button onclick="mudarCor('lightgreen')">Verde</button>
+    <button onclick="mudarCor('lightpink')">Rosa</button>
+  </section>
+
+  <!-- 6. Modo Noturno -->
+  <section>
+    <h2>6. Modo Noturno</h2>
+    <button onclick="alternarModoEscuro()">Alternar Modo Escuro</button>
+  </section>
+
+  <!-- 7. Visita Diária -->
+  <section>
+    <h2>7. Visita Diária</h2>
+    <p id="mensagemVisita"></p>
+  </section>
+
+  <!-- 8. Última Visita -->
+  <section>
+    <h2>8. Última Visita</h2>
+    <p id="ultimaVisita"></p>
+  </section>
+
+  <!-- 9. Mensagem de Boas-vindas Personalizada -->
+  <section>
+    <h2>9. Mensagem de Boas-vindas</h2>
+    <input type="text" id="msgBoasVindasInput" placeholder="Digite a mensagem">
+    <button onclick="salvarMensagemBoasVindas()">Salvar Mensagem</button>
+    <p id="msgBoasVindas"></p>
+  </section>
+
+  <!-- 10. Número Secreto -->
+  <section>
+    <h2>10. Adivinhe o Número Secreto (1 a 10)</h2>
+    <input type="number" id="palpiteInput" min="1" max="10">
+    <button onclick="verificarPalpite()">Tentar</button>
+    <p id="resultadoPalpite"></p>
+  </section>
+
+  <script>
+    // --- Exercício 1 ---
+    let contador = parseInt(localStorage.getItem('contador')) || 0;
+    document.getElementById('contador').innerText = contador;
+    function alterarContador(valor) {
+      contador += valor;
+      localStorage.setItem('contador', contador);
+      document.getElementById('contador').innerText = contador;
+    }
+
+    // --- Exercício 2 ---
+    const meuTexto = document.getElementById('meuTexto');
+    meuTexto.value = localStorage.getItem('textoSalvo') || '';
+    meuTexto.addEventListener('input', () => {
+      localStorage.setItem('textoSalvo', meuTexto.value);
+    });
+
+    // --- Exercício 3 ---
+    const tarefas = ['tarefa1', 'tarefa2', 'tarefa3'];
+    tarefas.forEach(id => {
+      const checkbox = document.getElementById(id);
+      checkbox.checked = localStorage.getItem(id) === 'true';
+      checkbox.addEventListener('change', () => {
+        localStorage.setItem(id, checkbox.checked);
+      });
+    });
+
+    // --- Exercício 4 ---
+    const nomeSalvo = localStorage.getItem('nomeUsuario');
+    if (nomeSalvo) {
+      document.getElementById('boasVindasNome').innerText = `Olá, ${nomeSalvo}!`;
+    }
+    function salvarNome() {
+      const nome = document.getElementById('nomeUsuarioInput').value;
+      localStorage.setItem('nomeUsuario', nome);
+      document.getElementById('boasVindasNome').innerText = `Olá, ${nome}!`;
+    }
+
+    // --- Exercício 5 ---
+    const corSalva = localStorage.getItem('corFundo');
+    if (corSalva) {
+      document.body.style.backgroundColor = corSalva;
+    }
+    function mudarCor(cor) {
+      document.body.style.backgroundColor = cor;
+      localStorage.setItem('corFundo', cor);
+    }
+
+    // --- Exercício 6 ---
+    const modoEscuro = localStorage.getItem('modoEscuro') === 'true';
+    if (modoEscuro) aplicarModoEscuro(true);
+    function alternarModoEscuro() {
+      const escuroAtivo = document.body.classList.toggle('dark');
+      aplicarModoEscuro(escuroAtivo);
+      localStorage.setItem('modoEscuro', escuroAtivo);
+    }
+    function aplicarModoEscuro(ativar) {
+      document.body.style.backgroundColor = ativar ? '#111' : corSalva || '#f9f9f9';
+      document.body.style.color = ativar ? 'white' : 'black';
+    }
+
+    // --- Exercício 7 ---
+    const hoje = new Date().toDateString();
+    const ultimaData = localStorage.getItem('dataUltimaVisita');
+    if (ultimaData === hoje) {
+      document.getElementById('mensagemVisita').innerText = 'Bem-vindo de volta!';
+    } else if (ultimaData) {
+      document.getElementById('mensagemVisita').innerText = 'Saudades de você!';
+    }
+    localStorage.setItem('dataUltimaVisita', hoje);
+
+    // --- Exercício 8 ---
+    const ultimaHora = localStorage.getItem('ultimaHora');
+    if (ultimaHora) {
+      document.getElementById('ultimaVisita').innerText = `Última visita: ${ultimaHora}`;
+    }
+    const agora = new Date();
+    const dataHoraFormatada = agora.toLocaleDateString() + ' ' + agora.toLocaleTimeString();
+    localStorage.setItem('ultimaHora', dataHoraFormatada);
+
+    // --- Exercício 9 ---
+    const msgSalva = localStorage.getItem('mensagemBoasVindas');
+    if (msgSalva) {
+      document.getElementById('msgBoasVindas').innerText = msgSalva;
+    }
+    function salvarMensagemBoasVindas() {
+      const msg = document.getElementById('msgBoasVindasInput').value;
+      localStorage.setItem('mensagemBoasVindas', msg);
+      document.getElementById('msgBoasVindas').innerText = msg;
+    }
+
+    // --- Exercício 10 ---
+    let numeroSecreto = localStorage.getItem('numeroSecreto');
+    if (!numeroSecreto) {
+      numeroSecreto = Math.floor(Math.random() * 10) + 1;
+      localStorage.setItem('numeroSecreto', numeroSecreto);
+    }
+    function verificarPalpite() {
+      const palpite = parseInt(document.getElementById('palpiteInput').value);
+      if (palpite === parseInt(numeroSecreto)) {
+        document.getElementById('resultadoPalpite').innerText = 'Parabéns! Você acertou!';
+        localStorage.removeItem('numeroSecreto'); // Remove para gerar um novo na próxima vez
+      } else {
+        document.getElementById('resultadoPalpite').innerText = 'Tente novamente!';
+      }
+    }
+  </script>
+</body>
+</html>
+
